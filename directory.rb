@@ -12,14 +12,14 @@ students = [
   { name: 'Joffrey Baratheon', cohort: :november },
   { name: 'Norman Bates', cohort: :november }
 ]
-def printer_header
+def print_header
   puts 'The students of Villains Academy'
   puts '-------------'
 end
 
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each_with_index do |student, i|
+    puts " #{i + 1}) #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
@@ -48,6 +48,6 @@ end
 
 # nothing happens until we call the methods
 students = input_students
-printer_header
+print_header
 print(students)
 print_footer(students)
