@@ -46,8 +46,29 @@ def input_students
   students
 end
 
+def filter_students_name(students)
+  puts 'Please enter the letter you want to filter the name by'
+  filter_letter = gets.chomp
+  puts
+
+  students.select do |student|
+    if student[:name].start_with?(filter_letter.upcase) || student[:name].start_with?(filter_letter.downcase)
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
+
+def filter_by_length(students)
+  students.select do |student|
+    if student[:name].length <= 12
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
 # nothing happens until we call the methods
 students = input_students
 print_header
-print(students)
+filter_by_length(students)
+# filter_students_name(students)
+# print(students)
 print_footer(students)
