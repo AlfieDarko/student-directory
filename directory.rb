@@ -35,13 +35,18 @@ def input_students
   students = []
   # gets the first name
   name = gets.chomp
+  puts 'Now enter the cohort'
+  cohort = gets.chomp
   # while the name is not empty, repeat this code
-  until name.empty?
+  until name.empty? || cohort.empty?
     # add the student hash to the array
-    students << { name: name, cohort: :november }
+    students << { name: name, cohort: cohort.to_s }
     puts "Now we have #{students.count} students"
+    puts 'Enter another student name'
     # get another name from the user
     name = gets.chomp
+    puts 'Now enter the cohort'
+    cohort = gets.chomp
   end
   # return the array of students
   students
@@ -60,6 +65,8 @@ def filter_students_name(students)
 end
 
 def filter_by_length(students)
+  puts 'List of student names under 12 characters'.center(15, ' ')
+  puts
   students.select do |student|
     if student[:name].length <= 12
       puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}) (#{student[:weight]})"
