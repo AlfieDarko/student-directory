@@ -1,16 +1,16 @@
 # lets put all students into an array
 students = [
-  { name: 'Dr. Hannibal Lecter', cohort: :november },
-  { name: 'Darth Vader', cohort: :november },
-  { name: 'Nurse Ratched', cohort: :november },
-  { name: 'Michael Corleone', cohort: :november },
-  { name: 'Alex DeLarge', cohort: :november },
-  { name: 'The Wicked Witch of the West', cohort: :november },
-  { name: 'Terminator', cohort: :november },
-  { name: 'Freddy Krueger', cohort: :november },
-  { name: 'The Joker', cohort: :november },
-  { name: 'Joffrey Baratheon', cohort: :november },
-  { name: 'Norman Bates', cohort: :november }
+  { name: 'Dr. Hannibal Lecter', cohort: :november, height: '183cm', weight: '91kg' },
+  { name: 'Darth Vader', cohort: :november, height: '181cm', weight: '94kg' },
+  { name: 'Nurse Ratched', cohort: :november, height: '163cm', weight: '71kg' },
+  { name: 'Michael Corleone', cohort: :november, height: '173cm', weight: '101kg' },
+  { name: 'Alex DeLarge', cohort: :november, height: '153cm', weight: '81kg' },
+  { name: 'The Wicked Witch of the West', cohort: :november, height: '197cm', weight: '98kg' },
+  { name: 'Terminator', cohort: :november, height: '189cm', weight: '85kg' },
+  { name: 'Freddy Krueger', cohort: :november, height: '190cm', weight: '95kg' },
+  { name: 'The Joker', cohort: :november, height: '195cm', weight: '97kg' },
+  { name: 'Joffrey Baratheon', cohort: :november, height: '190cm', weight: '98kg' },
+  { name: 'Norman Bates', cohort: :november, height: '189cm', weight: '98kg' }
 ]
 def print_header
   puts 'The students of Villains Academy'
@@ -19,7 +19,8 @@ end
 
 def print(students)
   students.each_with_index do |student, i|
-    puts " #{i + 1}) #{student[:name]} (#{student[:cohort]} cohort)"
+    puts " #{i + 1}) #{student[:name]} (#{student[:cohort]} cohort)
+    (#{student[:height]}) (#{student[:weight]})"
   end
 end
 
@@ -53,7 +54,7 @@ def filter_students_name(students)
 
   students.select do |student|
     if student[:name].start_with?(filter_letter.upcase) || student[:name].start_with?(filter_letter.downcase)
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}) (#{student[:weight]})"
     end
   end
 end
@@ -61,7 +62,7 @@ end
 def filter_by_length(students)
   students.select do |student|
     if student[:name].length <= 12
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}) (#{student[:weight]})"
     end
   end
 end
