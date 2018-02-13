@@ -65,6 +65,14 @@ def filter_by_length(students)
     end
   end
 end
+
+def each(students)
+  i = 0
+  while i < students.length
+    puts students[i]
+    i += 1
+  end
+end
 # nothing happens until we call the methods
 students = input_students
 print_header
