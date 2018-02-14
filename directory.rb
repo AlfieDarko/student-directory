@@ -30,23 +30,43 @@ end
 
 def input_students
   puts 'Please enter the names of the students'
-  puts 'To finish, just hit return twice'
+  puts 'To finish, just hit return x5'
   #  create an empty array
   students = []
   # gets the first name
   name = gets.chomp
+
+  puts "Is '#{name}' correct? Y/N"
+  response = gets.chomp
+
+  while response == 'N' || response == 'n'
+    puts 'Please enter the name of the students'
+    name = gets.chomp
+    puts "Is '#{name}' correct? Y/N"
+    response = gets.chomp
+  end
   puts 'Now enter the cohort'
-  cohort = gets.chomp
+  cohort = gets.chomp.to_s
+  cohort = 'January'.to_s if name != '' && cohort == ''
+  puts "Enter height of #{name} in cm"
+  height = gets.chomp
+  puts "Enter weight of #{name} in kg"
+  weight = gets.chomp
   # while the name is not empty, repeat this code
-  until name.empty? || cohort.empty?
+  until name.empty? && cohort.empty?
+    # || height.empty? || weight.empty?
     # add the student hash to the array
-    students << { name: name, cohort: cohort.to_s }
+    students << { name: name, cohort: cohort.to_s, height: height, weight: weight }
     puts "Now we have #{students.count} students"
     puts 'Enter another student name'
     # get another name from the user
     name = gets.chomp
     puts 'Now enter the cohort'
-    cohort = gets.chomp
+    cohort = gets.chomp.to_s
+    puts "Enter height of #{name}"
+    height = gets.chomp
+    puts "Enter weight of #{name}"
+    weight = gets.chomp
   end
   # return the array of students
   students
@@ -59,7 +79,7 @@ def filter_students_name(students)
 
   students.select do |student|
     if student[:name].start_with?(filter_letter.upcase) || student[:name].start_with?(filter_letter.downcase)
-      puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}) (#{student[:weight]})"
+      puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}cm) (#{student[:weight]}kg)"
     end
   end
 end
@@ -69,10 +89,12 @@ def filter_by_length(students)
   puts
   students.select do |student|
     if student[:name].length <= 12
-      puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}) (#{student[:weight]})"
+      puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}cm) (#{student[:weight]}kg)"
     end
   end
 end
+
+def print_by_cohort; end
 
 def each(students)
   i = 0
