@@ -94,7 +94,16 @@ def filter_by_length(students)
   end
 end
 
-def print_by_cohort; end
+def print_by_cohort(students)
+  puts 'Please enter cohort to list'
+  cohort_answer = gets.chomp
+
+  students.select do |student|
+    if student[:cohort].to_s == cohort_answer
+      puts "#{student[:name]} (#{student[:cohort]} cohort) (#{student[:height]}cm) (#{student[:weight]}kg)"
+    end
+  end
+end
 
 def each(students)
   i = 0
@@ -106,7 +115,8 @@ end
 # nothing happens until we call the methods
 students = input_students
 print_header
-filter_by_length(students)
+# filter_by_length(students)
 # filter_students_name(students)
 # print(students)
+print_by_cohort(students)
 print_footer(students)
