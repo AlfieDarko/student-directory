@@ -57,7 +57,11 @@ def input_students
     # || height.empty? || weight.empty?
     # add the student hash to the array
     students << { name: name, cohort: cohort.to_s, height: height, weight: weight }
-    puts "Now we have #{students.count} students"
+    if student.count > 1
+      puts "Now we have #{students.count} students"
+    elsif student.count == 1
+      puts  "Now we have #{students.count} student"
+
     puts 'Enter another student name'
     # get another name from the user
     name = gets.chomp
