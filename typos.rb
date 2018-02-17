@@ -36,6 +36,7 @@ def print_footer(students)
   puts "Overall we have #{students.count} great students" if students.any?
 end
 
+
 students = input_students
 print_header(students)
 print(students)
