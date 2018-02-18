@@ -18,51 +18,52 @@ def print_footer
 end
 
 def input_students
-  puts 'Please enter the names of the students'
   puts 'To finish, just hit return x5'
+
+  puts 'Please enter the names of the students'
   #  create an empty array
-  students = []
+  # students = []
   # gets the first name
-  name = gets.chomp
+  name = STDIN.gets.chomp
 
   puts "Is '#{name}' correct? Y/N"
-  response = gets.chomp
+  response = STDIN.gets.chomp
 
   while response == 'N' || response == 'n' || response == ''
     puts 'Please enter the name of the students'
-    name = gets.chomp
+    name = STDIN.gets.chomp
     puts "Is '#{name}' correct? Y/N"
     response = gets.chomp
   end
   puts 'Now enter the cohort'
-  cohort = gets.chomp.to_s
+  cohort = STDIN.gets.chomp.to_s
   cohort = 'January'.to_s if name != '' && cohort == ''
   puts "Enter height of #{name} in cm"
-  height = gets.chomp
+  height = STDIN.gets.chomp
   puts "Enter weight of #{name} in kg"
-  weight = gets.chomp
+  weight = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   until name.empty? && cohort.empty?
     # || height.empty? || weight.empty?
     # add the student hash to the array
-    @students << { name: name, cohort: cohort.to_s, height: height, weight: weight }
+    add_to_students(name, cohort, height, weight)
     if @students.count > 1
-      puts "Now we have #{students.count} students"
-    elsif students.count == 1
-      puts "Now we have #{students.count} student"
+      puts "Now we have #{@students.count} students"
+    elsif @students.count == 1
+      puts "Now we have #{@students.count} student"
     end
     puts 'Enter another student name'
     # get another name from the user
-    name = gets.chomp
+    name = STDIN.gets.chomp
     puts 'Now enter the cohort'
-    cohort = gets.chomp.to_s
+    cohort = STDIN.gets.chomp.to_s
     puts "Enter height of #{name}"
-    height = gets.chomp
+    height = STDIN.gets.chomp
     puts "Enter weight of #{name}"
-    weight = gets.chomp
+    weight = STDIN.gets.chomp
   end
   # return the array of students
-  students
+  @students
 end
 
 def filter_students_name
@@ -107,9 +108,10 @@ def each
 end
 
 def interactive_menu
+  load_students
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -135,6 +137,8 @@ def process(selection)
     show_students
   when '3'
     save_students
+  when '4'
+    load_students
   when '9'
     exit
   else
@@ -147,20 +151,40 @@ def save_students
   file = File.open('students.csv', 'w')
   # iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:cohort], student[:height], student[:weight]]
     csv_line = student_data.join(',')
     file.puts csv_line
   end
   file.close
 end
 
-def load_students
-  fie = File.open('students.csv', 'r')
+def load_students(_filename = 'students.csv')
+  puts 'What is the filename called'
+  response = STDIN.gets.chomp
+  file = File.open(response.to_s, 'r')
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @student << { name: name, cohort: cohort.to_sym }
+    name, cohort, height, weight = line.chomp.split(',')
+    add_to_students(name, cohort, height, weight)
   end
   file.close
+  puts 'File was succesfully loaded'
 end
 
+def try_load_students
+  _filename = ARGV.first # 1st argument from command line
+  return if _filename.nil? # if it exists
+  if File.exist?(_filename)
+    load_students(_filename)
+    puts "Loaded #{@students.count} from #{_filename}"
+  else # if it doesnt exist
+    puts "Sorry, #{_filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
+def add_to_students(name, cohort, height, weight)
+  @students << { name: name, cohort: cohort.to_s, height: height, weight: weight }
+end
+
+try_load_students
 interactive_menu
